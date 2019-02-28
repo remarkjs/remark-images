@@ -75,7 +75,7 @@ abide by its terms.
 
 ## License
 
-[MIT][] © [Compositor][] and [ZEIT][]
+[MIT][] © [John Otander][johno]
 
 <!-- Definitions -->
 
@@ -99,8 +99,6 @@ abide by its terms.
 
 [remark]: https://github.com/remarkjs/remark
 
-[compositor]: https://compositor.io
-
-[zeit]: https://zeit.co
+[johno]: https://johno.com
 
 [npm]: https://docs.npmjs.com/cli/install
