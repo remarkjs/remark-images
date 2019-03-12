@@ -12,9 +12,9 @@
     "mdxast",
     "image"
   ],
-  "homepage": "https://mdxjs.com",
-  "repository": "mdx-js/mdx",
-  "bugs": "https://github.com/mdx-js/mdx/issues",
+  "homepage": "https://remark.js.org/",
+  "repository": "remarkjs/remark-images",
+  "bugs": "https://github.com/remarkjs/remark-images/issues",
   "author": "John Otander <johnotander@gmail.com> (http://johnotander.com)",
   "contributors": [
     "John Otander <johnotander@gmail.com> (http://johnotander.com)",
