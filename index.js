@@ -6,14 +6,26 @@ const isAbsolutePath = str => str.startsWith('/')
 const isRelativePath = str => str.startsWith('./') || str.startsWith('../')
 const isImgPath = str => isAbsolutePath(str) || isRelativePath(str)
 
-module.exports = () => tree =>
-  visit(tree, 'text', node => {
-    const text = String(node.value).trim()
+module.exports = images
 
-    if ((isUrl(text) || isImgPath(text)) && isImgExt(text)) {
-      node.type = 'image'
-      node.url = text
+function images() {
+  return transform
+}
 
-      delete node.value
+function transform(tree) {
+  visit(tree, 'text', ontext)
+}
+
+function ontext(node, index, parent) {
+  const text = String(node.value).trim()
+
+  if ((isUrl(text) || isImgPath(text)) && isImgExt(text)) {
+    parent.children[index] = {
+      type: 'image',
+      url: text,
+      title: null,
+      alt: null,
+      position: node.position
     }
-  })
+  }
+}
