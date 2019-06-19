@@ -1,14 +1,17 @@
 {
   "name": "remark-images",
   "version": "0.18.0",
-  "description": "Improved syntax for images in markdown",
+  "description": "remark plugin to add an improved image syntax",
   "license": "MIT",
   "keywords": [
-    "mdx",
+    "unified",
+    "remark",
+    "plugin",
+    "mdast",
     "markdown",
+    "mdx",
     "react",
     "jsx",
-    "remark",
     "mdxast",
     "image"
   ],
@@ -20,7 +23,8 @@
     "John Otander <johnotander@gmail.com> (http://johnotander.com)",
     "Tim Neutkens <tim@zeit.co>",
     "Matija Marohnić <matija.marohnic@gmail.com>",
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+    "Mathias Beugnon <mathias@beugnon.fr>"
   ],
   "files": [
     "index.js"
