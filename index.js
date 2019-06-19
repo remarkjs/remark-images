@@ -29,7 +29,7 @@ function ontext(node, index, parent) {
     }
 
     // Add a link if we’re not already in one.
-    if (parent.type !== 'link') {
+    if (parent.type !== 'link' && parent.type !== 'linkReference') {
       next = {
         type: 'link',
         url: value,

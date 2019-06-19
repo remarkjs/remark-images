@@ -68,5 +68,16 @@ test('remark-images', function(t) {
     'should support links'
   )
 
+  t.equal(
+    remark()
+      .use(images)
+      .processSync(
+        '[https://example.com/alpha.jpg][1]\n\n[1]: https://example.com/bravo.jpg'
+      )
+      .toString(),
+    '[![](https://example.com/alpha.jpg)][1]\n\n[1]: https://example.com/bravo.jpg\n',
+    'should support link references'
+  )
+
   t.end()
 })
