@@ -31,7 +31,8 @@
   ],
   "dependencies": {
     "is-url": "^1.2.2",
-    "unist-util-visit": "^1.3.0"
+    "unist-util-is": "^3.0.0",
+    "unist-util-visit-parents": "^2.1.0"
   },
   "devDependencies": {
     "nyc": "^14.0.0",
