@@ -48,5 +48,25 @@ test('remark-images', function(t) {
     'should support very relative paths to images'
   )
 
+  t.equal(
+    remark()
+      .use(images)
+      .processSync('<https://example.com/example.jpg>')
+      .toString(),
+    '[![](https://example.com/example.jpg)](https://example.com/example.jpg)\n',
+    'should support autolinks'
+  )
+
+  t.equal(
+    remark()
+      .use(images)
+      .processSync(
+        '[https://example.com/alpha.jpg](https://example.com/bravo.jpg)'
+      )
+      .toString(),
+    '[![](https://example.com/alpha.jpg)](https://example.com/bravo.jpg)\n',
+    'should support links'
+  )
+
   t.end()
 })
