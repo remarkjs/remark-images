@@ -8,7 +8,7 @@ const isImgPath = str => isAbsolutePath(str) || isRelativePath(str)
 
 module.exports = () => tree =>
   visit(tree, 'text', node => {
-    const text = node.value ? node.value.trim() : ''
+    const text = String(node.value).trim()
 
     if ((isUrl(text) || isImgPath(text)) && isImgExt(text)) {
       node.type = 'image'
