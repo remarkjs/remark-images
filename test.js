@@ -26,7 +26,7 @@ test('remark-images', function(t) {
       .use(images)
       .processSync('/example.jpg')
       .toString(),
-    '![](/example.jpg)\n',
+    '[![](/example.jpg)](/example.jpg)\n',
     'should support absolute paths to images'
   )
 
@@ -35,7 +35,7 @@ test('remark-images', function(t) {
       .use(images)
       .processSync('./example.jpg')
       .toString(),
-    '![](./example.jpg)\n',
+    '[![](./example.jpg)](./example.jpg)\n',
     'should support relative paths to images'
   )
 
@@ -44,7 +44,7 @@ test('remark-images', function(t) {
       .use(images)
       .processSync('../example.jpg')
       .toString(),
-    '![](../example.jpg)\n',
+    '[![](../example.jpg)](../example.jpg)\n',
     'should support very relative paths to images'
   )
 

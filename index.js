@@ -17,15 +17,28 @@ function transform(tree) {
 }
 
 function ontext(node, index, parent) {
-  const text = String(node.value).trim()
+  const value = String(node.value).trim()
 
-  if ((isUrl(text) || isImgPath(text)) && isImgExt(text)) {
-    parent.children[index] = {
+  if ((isUrl(value) || isImgPath(value)) && isImgExt(value)) {
+    let next = {
       type: 'image',
-      url: text,
+      url: value,
       title: null,
       alt: null,
       position: node.position
     }
+
+    // Add a link if we’re not already in one.
+    if (parent.type !== 'link') {
+      next = {
+        type: 'link',
+        url: value,
+        title: null,
+        children: [next],
+        position: node.position
+      }
+    }
+
+    parent.children[index] = next
   }
 }
