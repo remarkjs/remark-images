@@ -1,6 +1,6 @@
 {
   "name": "remark-images",
-  "version": "0.18.0",
+  "version": "1.0.0",
   "description": "remark plugin to add an improved image syntax",
   "license": "MIT",
   "keywords": [
