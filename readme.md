@@ -70,6 +70,16 @@ Supported URLs / URIs:
 *   `./image.jpg`
 *   `../image.jpg`
 
+## Security
+
+Although this plugin should be safe to use, always be careful with user input.
+For example, it’s possible to hide JavaScript inside images (such as GIFs,
+WebPs, and SVGs).
+User provided images open you up to a [cross-site scripting (XSS)][xss] attack.
+
+This may become a problem if the Markdown later transformed to
+[**rehype**][rehype] ([**hast**][hast]) or opened in an unsafe Markdown viewer.
+
 ## Contribute
 
 See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
@@ -127,3 +137,9 @@ abide by its terms.
 [author]: https://johno.com
 
 [remark]: https://github.com/remarkjs/remark
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[rehype]: https://github.com/rehypejs/rehype
+
+[hast]: https://github.com/syntax-tree/hast
