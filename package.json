@@ -17,6 +17,10 @@
   ],
   "homepage": "https://remark.js.org/",
   "repository": "remarkjs/remark-images",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "bugs": "https://github.com/remarkjs/remark-images/issues",
   "author": "John Otander <johnotander@gmail.com> (http://johnotander.com)",
   "contributors": [
