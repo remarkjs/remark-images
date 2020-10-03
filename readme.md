@@ -10,6 +10,12 @@
 
 [**remark**][remark] plugin to add an improved image syntax.
 
+## Note!
+
+This plugin is ready for the new parser in remark
+([`remarkjs/remark#536`](https://github.com/remarkjs/remark/pull/536)).
+No change is needed: it works exactly the same now as it did before!
+
 ## Install
 
 [npm][]:

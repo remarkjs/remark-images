@@ -4,7 +4,7 @@ var images = require('.')
 
 test('remark-images', function (t) {
   t.equal(
-    remark().use(images).processSync('https://example.com').toString(),
+    remark().use(images).processSync('<https://example.com>').toString(),
     '<https://example.com>\n',
     'should not support non-image URLs'
   )
