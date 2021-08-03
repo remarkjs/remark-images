@@ -18,6 +18,9 @@ No change is needed: it works exactly the same now as it did before!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -36,17 +39,19 @@ Below will render an image:
 https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg
 ```
 
-And our script, `example.js`, looks as follows:
+And our module, `example.js`, looks as follows:
 
 ```js
-const vfile = require('to-vfile')
-const remark = require('remark')
-const images = require('remark-images')
+import {readSync} from 'to-vfile'
+import {remark} from 'remark'
+import remarkImages from 'remark-images'
+
+const file = readSync('example.md')
 
 remark()
-  .use(images)
-  .process(vfile.readSync('example.md'), function(err, file) {
-    if (err) throw err
+  .use(remarkImages)
+  .process(file)
+  .then((file) => {
     console.log(String(file))
   })
 ```
@@ -63,7 +68,10 @@ Below will render an image:
 
 ## API
 
-### `remark().use(images)`
+This package exports no identifiers.
+The default export is `remarkImages`.
+
+### `unified().use(remarkImages)`
 
 Add an improved image syntax.
 Transform URLs in text that reference images (`png`, `svg`, `jpg`, `jpeg`, or
