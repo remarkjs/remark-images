@@ -39,8 +39,8 @@
   ],
   "dependencies": {
     "is-url": "^1.2.2",
-    "unist-util-is": "^4.0.0",
-    "unist-util-visit-parents": "^3.0.0"
+    "unist-util-is": "^5.0.0",
+    "unist-util-visit-parents": "^5.0.0"
   },
   "devDependencies": {
     "c8": "^7.0.0",

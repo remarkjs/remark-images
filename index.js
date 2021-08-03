@@ -1,6 +1,6 @@
 import isUrl from 'is-url'
-import visit from 'unist-util-visit-parents'
-import convert from 'unist-util-is/convert.js'
+import {visitParents} from 'unist-util-visit-parents'
+import {convert} from 'unist-util-is'
 
 const isImgExt = (value) => /\.(svg|png|jpg|jpeg|gif)$/.test(value)
 const isAbsolutePath = (value) => value.startsWith('/')
@@ -14,7 +14,7 @@ export default function remarkImages() {
 }
 
 function transform(tree) {
-  visit(tree, 'text', ontext)
+  visitParents(tree, 'text', ontext)
 }
 
 function ontext(node, parents) {
