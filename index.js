@@ -1,57 +1,65 @@
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Image} Image
+ * @typedef {import('mdast').Link} Link
+ */
+
 import isUrl from 'is-url'
 import {visitParents} from 'unist-util-visit-parents'
-import {convert} from 'unist-util-is'
+import {is} from 'unist-util-is'
 
-const isImgExt = (value) => /\.(svg|png|jpg|jpeg|gif)$/.test(value)
-const isAbsolutePath = (value) => value.startsWith('/')
-const isRelativePath = (value) =>
-  value.startsWith('./') || value.startsWith('../')
-const isImgPath = (value) => isAbsolutePath(value) || isRelativePath(value)
-const isInteractive = convert(['link', 'linkReference'])
+const isImgExt = (/** @type {string} */ value) =>
+  /\.(svg|png|jpg|jpeg|gif)$/.test(value)
+const isImgPath = (/** @type {string} */ value) =>
+  value.startsWith('/') || value.startsWith('./') || value.startsWith('../')
 
+/**
+ * Plugin to add an improved image syntax.
+ *
+ * @type {import('unified').Plugin<void[], Root>}
+ */
 export default function remarkImages() {
-  return transform
-}
+  return (tree) => {
+    visitParents(tree, 'text', (node, parents) => {
+      const value = String(node.value).trim()
 
-function transform(tree) {
-  visitParents(tree, 'text', ontext)
-}
+      if ((isUrl(value) || isImgPath(value)) && isImgExt(value)) {
+        let interactive = false
+        let length = parents.length
+        const siblings = parents[length - 1].children
 
-function ontext(node, parents) {
-  const value = String(node.value).trim()
+        // Check if we’re in interactive content.
+        while (length--) {
+          if (is(parents[length], ['link', 'linkReference'])) {
+            interactive = true
+            break
+          }
+        }
 
-  if ((isUrl(value) || isImgPath(value)) && isImgExt(value)) {
-    let interactive = false
-    let length = parents.length
-    const siblings = parents[length - 1].children
+        /** @type {Image} */
+        const image = {
+          type: 'image',
+          url: value,
+          title: null,
+          alt: '',
+          position: node.position
+        }
+        /** @type {Image|Link} */
+        let next = image
 
-    // Check if we’re in interactive content.
-    while (length--) {
-      if (isInteractive(parents[length])) {
-        interactive = true
-        break
+        // Add a link if we’re not already in one.
+        if (!interactive) {
+          next = {
+            type: 'link',
+            url: value,
+            title: null,
+            children: [image],
+            position: node.position
+          }
+        }
+
+        siblings[siblings.indexOf(node)] = next
       }
-    }
-
-    let next = {
-      type: 'image',
-      url: value,
-      title: null,
-      alt: null,
-      position: node.position
-    }
-
-    // Add a link if we’re not already in one.
-    if (!interactive) {
-      next = {
-        type: 'link',
-        url: value,
-        title: null,
-        children: [next],
-        position: node.position
-      }
-    }
-
-    siblings[siblings.indexOf(node)] = next
+    })
   }
 }
