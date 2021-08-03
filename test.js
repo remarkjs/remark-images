@@ -1,5 +1,5 @@
 import test from 'tape'
-import remark from 'remark'
+import {remark} from 'remark'
 import remarkImages from './index.js'
 
 test('remarkImages', function (t) {
