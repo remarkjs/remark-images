@@ -1,6 +1,6 @@
-const isUrl = require('is-url')
-const visit = require('unist-util-visit-parents')
-const convert = require('unist-util-is/convert')
+import isUrl from 'is-url'
+import visit from 'unist-util-visit-parents'
+import convert from 'unist-util-is/convert.js'
 
 const isImgExt = (value) => /\.(svg|png|jpg|jpeg|gif)$/.test(value)
 const isAbsolutePath = (value) => value.startsWith('/')
@@ -9,9 +9,7 @@ const isRelativePath = (value) =>
 const isImgPath = (value) => isAbsolutePath(value) || isRelativePath(value)
 const isInteractive = convert(['link', 'linkReference'])
 
-module.exports = images
-
-function images() {
+export default function remarkImages() {
   return transform
 }
 
