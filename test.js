@@ -2,7 +2,7 @@ import test from 'tape'
 import {remark} from 'remark'
 import remarkImages from './index.js'
 
-test('remarkImages', function (t) {
+test('remarkImages', (t) => {
   t.equal(
     remark().use(remarkImages).processSync('<https://example.com>').toString(),
     '<https://example.com>\n',
