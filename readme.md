@@ -23,6 +23,7 @@
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
+*   [Related](#related)
 *   [Contribute](#contribute)
 *   [License](#license)
 
@@ -162,6 +163,13 @@ User provided images open you up to a [cross-site scripting (XSS)][xss] attack.
 
 This may become a problem if the markdown later transformed to
 **[rehype][]** (**[hast][]**) or opened in an unsafe markdown viewer.
+
+## Related
+
+*   [`remarkjs/remark-unwrap-images`][remark-unwrap-images]
+    — remove the wrapping paragraph for images
+*   [`remarkjs/remark-embed-images`](https://github.com/remarkjs/remark-embed-images)
+    — embed local images as data URIs
 
 ## Contribute
 
