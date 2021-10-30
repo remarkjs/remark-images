@@ -1,6 +1,6 @@
 import test from 'tape'
 import {remark} from 'remark'
-import remarkImages from './index.js'
+import remarkImages, {defaultImageExtensions} from './index.js'
 
 test('remarkImages', (t) => {
   t.equal(
@@ -130,6 +130,12 @@ test('remarkImages', (t) => {
       .toString(),
     '[![](/example.custom)](/example.custom)\n',
     'should support custom extension as image through options'
+  )
+
+  t.true(
+    Array.isArray(defaultImageExtensions) &&
+      defaultImageExtensions.every((ext) => typeof ext === 'string'),
+    'should export default image extensions for reuse'
   )
 
   t.end()
