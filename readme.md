@@ -8,59 +8,101 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**remark**][remark] plugin to add an improved image syntax.
+**[remark][]** plugin to add a simpler image syntax.
 
-## Note!
+## Contents
 
-This plugin is ready for the new parser in remark
-([`remarkjs/remark#536`](https://github.com/remarkjs/remark/pull/536)).
-No change is needed: it works exactly the same now as it did before!
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkImages)`](#unifieduseremarkimages)
+*   [Syntax](#syntax)
+*   [Syntax tree](#syntax-tree)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin to add a simpler
+image syntax.
+
+**unified** is a project that transforms content with abstract syntax trees
+(ASTs).
+**remark** adds support for markdown to unified.
+**mdast** is the markdown AST that remark uses.
+This is a remark plugin that transforms mdast.
+
+## When should I use this?
+
+Images are [notoriously complex][tweet] in markdown.
+This projects adds a different way to include images: by pasting in a URL or
+path to them (such as `./image.jpg`).
+The behavior added by this plugin is nice when you’re authoring your own
+markdown and are sure that you’re explaining what happens in images in
+surrounding prose.
+
+Another plugin, [`remark-unwrap-images`][remark-unwrap-images], could be useful
+to unwrap images on their own in a paragraph.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-images
 ```
 
+In Deno with [Skypack][]:
+
+```js
+import remarkImages from 'https://cdn.skypack.dev/remark-images@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkImages from 'https://cdn.skypack.dev/remark-images@3?min'
+</script>
+```
+
 ## Use
 
-Say we have the following file, `example.md`:
+Say we have the following file `example.md`:
 
 ```markdown
-#### A url
-
 Below will render an image:
 
 https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg
 ```
 
-And our module, `example.js`, looks as follows:
+And our module `example.js` looks as follows:
 
 ```js
-import {readSync} from 'to-vfile'
+import {read} from 'to-vfile'
 import {remark} from 'remark'
 import remarkImages from 'remark-images'
 
-const file = readSync('example.md')
+main()
 
-remark()
-  .use(remarkImages)
-  .process(file)
-  .then((file) => {
-    console.log(String(file))
-  })
+async function main() {
+  const file = await remark()
+    .use(remarkImages)
+    .process(await read('example.md'))
+
+  console.log(String(file))
+}
 ```
 
 Now, running `node example` yields:
 
 ```markdown
-#### A url
-
 Below will render an image:
 
 [![](https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg)](https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg)
@@ -73,16 +115,43 @@ The default export is `remarkImages`.
 
 ### `unified().use(remarkImages)`
 
-Add an improved image syntax.
-Transform URLs in text that reference images (`png`, `svg`, `jpg`, `jpeg`, or
-`gif`) to images.
+Plugin to add a simpler image syntax.
+There are no options.
 
-Supported URLs / URIs:
+## Syntax
+
+This plugin looks for URLs and paths, on their own, that end in an image
+extension (`png`, `svg`, `jpg`, `jpeg`, or `gif`).
+If they occur inside a link already, then only an image is created.
+If they instead do not occur in a link, the image is also linked.
+
+Some examples of URLs and paths are:
 
 *   `https://example.com/image.jpg`
 *   `/image.jpg`
 *   `./image.jpg`
 *   `../image.jpg`
+
+## Syntax tree
+
+This plugin adds mdast [`Image`][image] and [`Link`][link] nodes to the syntax
+tree.
+These are the same nodes that represent images through `![](url)` and links
+through `[text](url)` syntax.
+
+## Types
+
+This package is fully typed with [TypeScript][].
+There are no extra exported types.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+This plugin works with `unified` version 3+ and `remark` version 4+.
 
 ## Security
 
@@ -91,8 +160,8 @@ For example, it’s possible to hide JavaScript inside images (such as GIFs,
 WebPs, and SVGs).
 User provided images open you up to a [cross-site scripting (XSS)][xss] attack.
 
-This may become a problem if the Markdown later transformed to
-[**rehype**][rehype] ([**hast**][hast]) or opened in an unsafe Markdown viewer.
+This may become a problem if the markdown later transformed to
+**[rehype][]** (**[hast][]**) or opened in an unsafe markdown viewer.
 
 ## Contribute
 
@@ -138,6 +207,8 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[skypack]: https://www.skypack.dev
+
 [health]: https://github.com/remarkjs/.github
 
 [contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
@@ -152,8 +223,20 @@ abide by its terms.
 
 [remark]: https://github.com/remarkjs/remark
 
+[unified]: https://github.com/unifiedjs/unified
+
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[typescript]: https://www.typescriptlang.org
 
 [rehype]: https://github.com/rehypejs/rehype
 
 [hast]: https://github.com/syntax-tree/hast
+
+[tweet]: https://twitter.com/gruber/status/1246489863932821512
+
+[remark-unwrap-images]: https://github.com/remarkjs/remark-unwrap-images
+
+[image]: https://github.com/syntax-tree/mdast#image
+
+[link]: https://github.com/syntax-tree/mdast#link

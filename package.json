@@ -1,7 +1,7 @@
 {
   "name": "remark-images",
   "version": "3.0.0",
-  "description": "remark plugin to add an improved image syntax",
+  "description": "remark plugin to add a simpler image syntax",
   "license": "MIT",
   "keywords": [
     "unified",
