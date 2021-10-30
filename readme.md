@@ -17,7 +17,7 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`unified().use(remarkImages)`](#unifieduseremarkimages)
+    *   [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
 *   [Syntax](#syntax)
 *   [Syntax tree](#syntax-tree)
 *   [Types](#types)
@@ -111,13 +111,22 @@ Below will render an image:
 
 ## API
 
-This package exports no identifiers.
+This package exports `defaultImageExtensions`.
 The default export is `remarkImages`.
 
-### `unified().use(remarkImages)`
+### `unified().use(remarkImages[, options])`
 
 Plugin to add a simpler image syntax.
-There are no options.
+Transform URLs in text that reference images (`png`, `svg`, `jpg`, `jpeg`, `gif`, `webp`, or `avif`) to images.
+
+##### `options`
+
+Configuration.
+
+###### `options.imageExtensions`
+
+List of file extensions recognized as images (`Array.<string>?`, default
+`['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
 
 ## Syntax
 
