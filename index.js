@@ -26,7 +26,10 @@ export default function remarkImages() {
       if ((isUrl(value) || isImgPath(value)) && isImgExt(value)) {
         let interactive = false
         let length = parents.length
-        const siblings = parents[length - 1].children
+        const parent = parents[length - 1]
+        const siblings = parent.children
+        // @ts-expect-error: too many possible parents.
+        const index = siblings.indexOf(node)
 
         // Check if we’re in interactive content.
         while (length--) {
@@ -58,7 +61,7 @@ export default function remarkImages() {
           }
         }
 
-        siblings[siblings.indexOf(node)] = next
+        siblings[index] = next
       }
     })
   }
