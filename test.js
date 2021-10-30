@@ -132,6 +132,15 @@ test('remarkImages', (t) => {
     'should support custom extension as image through options'
   )
 
+  t.equal(
+    remark()
+      .use(remarkImages, {imageExtensions: ['custom']})
+      .processSync('/example.jpg')
+      .toString(),
+    '/example.jpg\n',
+    'should support removing a default extension'
+  )
+
   t.true(
     Array.isArray(defaultImageExtensions) &&
       defaultImageExtensions.every((ext) => typeof ext === 'string'),
