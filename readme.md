@@ -121,12 +121,17 @@ Transform URLs in text that reference images (`png`, `svg`, `jpg`, `jpeg`, `gif`
 
 ##### `options`
 
-Configuration.
+Configuration (optional).
 
 ###### `options.imageExtensions`
 
 List of file extensions recognized as images (`Array.<string>?`, default
-`['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
+[`defaultImageExtensions`](#defaultimageextensions)).
+
+### `defaultImageExtensions`
+
+list of file extensions recognized as an image by default (constant `['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
+Note: extension does not include `.`, only the extension name.
 
 ## Syntax
 
