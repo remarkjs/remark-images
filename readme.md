@@ -40,7 +40,7 @@ This is a remark plugin that transforms mdast.
 
 ## When should I use this?
 
-Images are [notoriously complex][tweet] in markdown.
+Images are [notoriously unintuitive][tweet] in markdown.
 This projects adds a different way to include images: by pasting in a URL or
 path to them (such as `./image.jpg`).
 The behavior added by this plugin is nice when you’re authoring your own
