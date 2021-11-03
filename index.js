@@ -14,7 +14,7 @@ const isImgPath = (/** @type {string} */ value) =>
   value.startsWith('/') || value.startsWith('./') || value.startsWith('../')
 
 /**
- * Plugin to add an improved image syntax.
+ * Plugin to add a simpler image syntax.
  *
  * @type {import('unified').Plugin<void[], Root>}
  */
