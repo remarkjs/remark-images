@@ -18,6 +18,7 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
+    *   [`defaultImageExtensions`](#defaultimageextensions)
 *   [Syntax](#syntax)
 *   [Syntax tree](#syntax-tree)
 *   [Types](#types)
@@ -29,8 +30,7 @@
 
 ## What is this?
 
-This package is a [unified][] ([remark][]) plugin to add a simpler
-image syntax.
+This package is a [unified][] ([remark][]) plugin to add a simpler image syntax.
 
 **unified** is a project that transforms content with abstract syntax trees
 (ASTs).
@@ -111,13 +111,14 @@ Below will render an image:
 
 ## API
 
-This package exports `defaultImageExtensions`.
+This package exports the identifier `defaultImageExtensions`.
 The default export is `remarkImages`.
 
 ### `unified().use(remarkImages[, options])`
 
 Plugin to add a simpler image syntax.
-Transform URLs in text that reference images (`png`, `svg`, `jpg`, `jpeg`, `gif`, `webp`, or `avif`) to images.
+Transform URLs in text that reference images (see `defaultImageExtensions`) to
+images.
 
 ##### `options`
 
@@ -130,13 +131,14 @@ List of file extensions recognized as images (`Array.<string>?`, default
 
 ### `defaultImageExtensions`
 
-list of file extensions recognized as an image by default (constant `['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
+List of file extensions recognized as an image by default (constant
+`['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
 Note: extension does not include `.`, only the extension name.
 
 ## Syntax
 
 This plugin looks for URLs and paths, on their own, that end in an image
-extension (`png`, `svg`, `jpg`, `jpeg`, or `gif`).
+extension (see `defaultImageExtensions`).
 If they occur inside a link already, then only an image is created.
 If they instead do not occur in a link, the image is also linked.
 
