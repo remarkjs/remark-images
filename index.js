@@ -2,23 +2,44 @@
  * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Image} Image
  * @typedef {import('mdast').Link} Link
+ *
+ * @typedef Options
+ *   Configuration (optional).
+ * @property {Array<string>} [imageExtensions]
+ *   File extensions (without dot) to treat as images.
  */
 
 import isUrl from 'is-url'
 import {visitParents} from 'unist-util-visit-parents'
 import {is} from 'unist-util-is'
 
-const isImgExt = (/** @type {string} */ value) =>
-  /\.(svg|png|jpg|jpeg|gif)$/.test(value)
 const isImgPath = (/** @type {string} */ value) =>
   value.startsWith('/') || value.startsWith('./') || value.startsWith('../')
 
 /**
+ * Extensions recognized as images by default
+ */
+export const defaultImageExtensions = [
+  'svg',
+  'png',
+  'jpg',
+  'jpeg',
+  'gif',
+  'webp',
+  'avif'
+]
+
+/**
  * Plugin to add a simpler image syntax.
  *
- * @type {import('unified').Plugin<void[], Root>}
+ * @type {import('unified').Plugin<[Options?]|void[], Root>}
  */
-export default function remarkImages() {
+export default function remarkImages({
+  imageExtensions = defaultImageExtensions
+} = {}) {
+  const imgExtRegex = new RegExp(`\\.(${imageExtensions.join('|')})$`)
+  const isImgExt = (/** @type {string} */ value) => imgExtRegex.test(value)
+
   return (tree) => {
     visitParents(tree, 'text', (node, parents) => {
       const value = String(node.value).trim()
