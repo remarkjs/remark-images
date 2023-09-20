@@ -5,7 +5,7 @@
  *
  * @typedef Options
  *   Configuration (optional).
- * @property {Array<string>} [imageExtensions]
+ * @property {Array<string> | undefined} [imageExtensions]
  *   File extensions (without dot) to treat as images.
  */
 
