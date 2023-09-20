@@ -42,9 +42,9 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "collapse-white-space": "^2.0.0",
     "is-url": "^1.0.0",
-    "unified": "^11.0.0",
-    "unist-util-is": "^6.0.0",
+    "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },
   "devDependencies": {
@@ -87,6 +87,9 @@
     "strict": true
   },
   "xo": {
-    "prettier": true
+    "prettier": true,
+    "rules": {
+      "unicorn/prefer-at": "off"
+    }
   }
 }

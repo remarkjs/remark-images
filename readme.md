@@ -126,7 +126,7 @@ Configuration (optional).
 
 ###### `options.imageExtensions`
 
-List of file extensions recognized as images (`Array.<string>?`, default
+List of file extensions recognized as images (`Array<string>?`, default
 [`defaultImageExtensions`](#defaultimageextensions)).
 
 ### `defaultImageExtensions`
