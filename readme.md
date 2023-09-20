@@ -57,14 +57,14 @@ npm install remark-images
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkImages from 'https://esm.sh/remark-images@3'
+import remarkImages from 'https://esm.sh/remark-images@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkImages from 'https://esm.sh/remark-images@3?bundle'
+  import remarkImages from 'https://esm.sh/remark-images@4?bundle'
 </script>
 ```
 
