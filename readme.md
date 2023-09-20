@@ -17,8 +17,9 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
     *   [`defaultImageExtensions`](#defaultimageextensions)
+    *   [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
+    *   [`Options`](#options)
 *   [Syntax](#syntax)
 *   [Syntax tree](#syntax-tree)
 *   [Types](#types)
@@ -32,12 +33,6 @@
 
 This package is a [unified][] ([remark][]) plugin to add a simpler image syntax.
 
-**unified** is a project that transforms content with abstract syntax trees
-(ASTs).
-**remark** adds support for markdown to unified.
-**mdast** is the markdown AST that remark uses.
-This is a remark plugin that transforms mdast.
-
 ## When should I use this?
 
 Images are [notoriously unintuitive][tweet] in markdown.
@@ -45,15 +40,15 @@ This projects adds a different way to include images: by pasting in a URL or
 path to them (such as `./image.jpg`).
 The behavior added by this plugin is nice when you’re authoring your own
 markdown and are sure that you’re explaining what happens in images in
-surrounding prose.
+surrounding prose (as you can’t add alt text with this).
 
 Another plugin, [`remark-unwrap-images`][remark-unwrap-images], could be useful
 to unwrap images on their own in a paragraph.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][esm].
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install remark-images
@@ -78,67 +73,71 @@ In browsers with [`esm.sh`][esmsh]:
 Say we have the following file `example.md`:
 
 ```markdown
-Below will render an image:
+Original plates from Clyde Tombaugh’s discovery of Pluto:
 
-https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg
+https://upload.wikimedia.org/wikipedia/en/c/c6/Pluto_discovery_plates.png
 ```
 
-And our module `example.js` looks as follows:
+…and a module `example.js`:
 
 ```js
-import {read} from 'to-vfile'
 import {remark} from 'remark'
 import remarkImages from 'remark-images'
+import {read} from 'to-vfile'
 
-main()
+const file = await remark()
+  .use(remarkImages)
+  .process(await read('example.md'))
 
-async function main() {
-  const file = await remark()
-    .use(remarkImages)
-    .process(await read('example.md'))
-
-  console.log(String(file))
-}
+console.log(String(file))
 ```
 
-Now, running `node example` yields:
+…then running `node example.js` yields:
 
 ```markdown
-Below will render an image:
+Original plates from Clyde Tombaugh’s discovery of Pluto:
 
-[![](https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg)](https://c8r-x0.s3.amazonaws.com/lab-components-macbook.jpg)
+[![](https://upload.wikimedia.org/wikipedia/en/c/c6/Pluto_discovery_plates.png)](https://upload.wikimedia.org/wikipedia/en/c/c6/Pluto_discovery_plates.png)
 ```
 
 ## API
 
-This package exports the identifier `defaultImageExtensions`.
-The default export is `remarkImages`.
-
-### `unified().use(remarkImages[, options])`
-
-Plugin to add a simpler image syntax.
-Transform URLs in text that reference images (see `defaultImageExtensions`) to
-images.
-
-##### `options`
-
-Configuration (optional).
-
-###### `options.imageExtensions`
-
-List of file extensions recognized as images (`Array<string>?`, default
-[`defaultImageExtensions`](#defaultimageextensions)).
+This package exports the identifier
+[`defaultImageExtensions`][api-default-image-extensions].
+The default export is [`remarkImages`][api-remark-images].
 
 ### `defaultImageExtensions`
 
-List of file extensions recognized as an image by default (constant
-`['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']`).
-Note: extension does not include `.`, only the extension name.
+Extensions recognized as images by default (`Array<string>`).
+Currently `['avif', 'gif', 'jpeg', 'jpg', 'png', 'svg', 'webp']`.
+
+### `unified().use(remarkImages[, options])`
+
+Add a simpler image syntax.
+
+###### Parameters
+
+*   `options` ([`Options`][api-options], optional)
+    — configuration
+
+###### Returns
+
+Transform ([`Transformer`][unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `imageExtensions` (`Array<string>`, default:
+    [`defaultImageExtensions`][api-default-image-extensions])
+    — file extensions (without dot) to treat as images
 
 ## Syntax
 
 This plugin looks for URLs and paths, on their own, that end in an image
-extension (see `defaultImageExtensions`).
+extension.
 If they occur inside a link already, then only an image is created.
 If they instead do not occur in a link, the image is also linked.
 
@@ -151,22 +150,25 @@ Some examples of URLs and paths are:
 
 ## Syntax tree
 
-This plugin adds mdast [`Image`][image] and [`Link`][link] nodes to the syntax
-tree.
+This plugin adds mdast [`Image`][mdast-image] and [`Link`][mdast-link] nodes to
+the syntax tree.
 These are the same nodes that represent images through `![](url)` and links
 through `[text](url)` syntax.
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-There are no extra exported types.
+It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `remark-images@^3`,
+compatible with Node.js 12.
 
 This plugin works with `unified` version 3+ and `remark` version 4+.
 
@@ -175,16 +177,17 @@ This plugin works with `unified` version 3+ and `remark` version 4+.
 Although this plugin should be safe to use, always be careful with user input.
 For example, it’s possible to hide JavaScript inside images (such as GIFs,
 WebPs, and SVGs).
-User provided images open you up to a [cross-site scripting (XSS)][xss] attack.
+User provided images open you up to a [cross-site scripting (XSS)][wiki-xss]
+attack.
 
 This may become a problem if the markdown later transformed to
 **[rehype][]** (**[hast][]**) or opened in an unsafe markdown viewer.
 
 ## Related
 
-*   [`remarkjs/remark-unwrap-images`][remark-unwrap-images]
+*   [`remark-unwrap-images`][remark-unwrap-images]
     — remove the wrapping paragraph for images
-*   [`remarkjs/remark-embed-images`](https://github.com/remarkjs/remark-embed-images)
+*   [`remark-embed-images`](https://github.com/remarkjs/remark-embed-images)
     — embed local images as data URIs
 
 ## Contribute
@@ -215,9 +218,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/remark-images
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-images.svg
+[size-badge]: https://img.shields.io/bundlejs/size/remark-images
 
-[size]: https://bundlephobia.com/result?p=remark-images
+[size]: https://bundlejs.com/?q=remark-images
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -231,36 +234,46 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
 [esmsh]: https://esm.sh
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: license
 
 [author]: https://johno.com
 
-[remark]: https://github.com/remarkjs/remark
+[hast]: https://github.com/syntax-tree/hast
 
-[unified]: https://github.com/unifiedjs/unified
+[mdast-image]: https://github.com/syntax-tree/mdast#image
 
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
-
-[typescript]: https://www.typescriptlang.org
+[mdast-link]: https://github.com/syntax-tree/mdast#link
 
 [rehype]: https://github.com/rehypejs/rehype
 
-[hast]: https://github.com/syntax-tree/hast
-
-[tweet]: https://twitter.com/gruber/status/1246489863932821512
+[remark]: https://github.com/remarkjs/remark
 
 [remark-unwrap-images]: https://github.com/remarkjs/remark-unwrap-images
 
-[image]: https://github.com/syntax-tree/mdast#image
+[tweet]: https://twitter.com/gruber/status/1246489863932821512
 
-[link]: https://github.com/syntax-tree/mdast#link
+[typescript]: https://www.typescriptlang.org
+
+[unified]: https://github.com/unifiedjs/unified
+
+[unified-transformer]: https://github.com/unifiedjs/unified#transformer
+
+[wiki-xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[api-default-image-extensions]: #defaultimageextensions
+
+[api-options]: #options
+
+[api-remark-images]: #unifieduseremarkimages-options
