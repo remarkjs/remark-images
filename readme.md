@@ -12,22 +12,22 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`defaultImageExtensions`](#defaultimageextensions)
-    *   [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
-    *   [`Options`](#options)
-*   [Syntax](#syntax)
-*   [Syntax tree](#syntax-tree)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`defaultImageExtensions`](#defaultimageextensions)
+  * [`unified().use(remarkImages[, options])`](#unifieduseremarkimages-options)
+  * [`Options`](#options)
+* [Syntax](#syntax)
+* [Syntax tree](#syntax-tree)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Related](#related)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -117,8 +117,8 @@ Add a simpler image syntax.
 
 ###### Parameters
 
-*   `options` ([`Options`][api-options], optional)
-    — configuration
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
@@ -130,9 +130,9 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-*   `imageExtensions` (`Array<string>`, default:
-    [`defaultImageExtensions`][api-default-image-extensions])
-    — file extensions (without dot) to treat as images
+* `imageExtensions` (`Array<string>`, default:
+  [`defaultImageExtensions`][api-default-image-extensions])
+  — file extensions (without dot) to treat as images
 
 ## Syntax
 
@@ -143,10 +143,10 @@ If they instead do not occur in a link, the image is also linked.
 
 Some examples of URLs and paths are:
 
-*   `https://example.com/image.jpg`
-*   `/image.jpg`
-*   `./image.jpg`
-*   `../image.jpg`
+* `https://example.com/image.jpg`
+* `/image.jpg`
+* `./image.jpg`
+* `../image.jpg`
 
 ## Syntax tree
 
@@ -185,10 +185,10 @@ This may become a problem if the markdown later transformed to
 
 ## Related
 
-*   [`remark-unwrap-images`][remark-unwrap-images]
-    — remove the wrapping paragraph for images
-*   [`remark-embed-images`](https://github.com/remarkjs/remark-embed-images)
-    — embed local images as data URIs
+* [`remark-unwrap-images`][remark-unwrap-images]
+  — remove the wrapping paragraph for images
+* [`remark-embed-images`](https://github.com/remarkjs/remark-embed-images)
+  — embed local images as data URIs
 
 ## Contribute
 
