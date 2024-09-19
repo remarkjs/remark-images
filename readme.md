@@ -133,6 +133,8 @@ Configuration (TypeScript type).
 * `imageExtensions` (`Array<string>`, default:
   [`defaultImageExtensions`][api-default-image-extensions])
   — file extensions (without dot) to treat as images
+* `link` (`boolean`, default: `true`)
+  — whether to wrap the image with a link to it
 
 ## Syntax
 

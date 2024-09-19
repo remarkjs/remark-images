@@ -196,4 +196,26 @@ test('remarkImages', async function (t) {
       '/a b c.jpg\n'
     )
   })
+
+  await t.test('should support `link: false`', async function () {
+    assert.equal(
+      String(
+        await remark()
+          .use(remarkImages, {link: false})
+          .process('https://example.com/alpha.jpg')
+      ),
+      '![](https://example.com/alpha.jpg)\n'
+    )
+  })
+
+  await t.test('should support `link: true`', async function () {
+    assert.equal(
+      String(
+        await remark()
+          .use(remarkImages, {link: true})
+          .process('https://example.com/alpha.jpg')
+      ),
+      '[![](https://example.com/alpha.jpg)](https://example.com/alpha.jpg)\n'
+    )
+  })
 })
